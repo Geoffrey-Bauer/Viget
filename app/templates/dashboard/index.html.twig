@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Dashboard{% endblock %}
+
+{% block body %}
+    <div class="flex flex-row">
+        {% include 'dashboard/components/sidebar.html.twig' %}
+
+        <div class="flex-grow ml-64"> <!-- Compensation de la largeur de la sidebar -->
+            {% include 'dashboard/components/topbar.html.twig' %}
+
+            <div class="pt-16 p-6"> <!-- Ajout d'un padding-top pour éviter que le contenu soit masqué par la topbar -->
+                <h1 class="text-3xl font-bold mb-6">Bienvenue sur votre Dashboard, {{ user.firstname }}!</h1>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Bloc pour le nombre de commandes -->
+                    <div class="bg-white shadow-lg rounded-lg p-5 flex items-center justify-between">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-700">Nombre de Commandes</h3>
+                            <p class="text-2xl font-bold text-blue-600">{{ orders|length }}</p>
+                        </div>
+                        <svg class="w-12 h-12 text-blue-100" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12z"/></svg>
+                    </div>
+
+                    <!-- Bloc pour le nombre de tickets -->
+                    <div class="bg-white shadow-lg rounded-lg p-5 flex items-center justify-between">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-700">Nombre de Tickets</h3>
+                            <p class="text-2xl font-bold text-green-600">{{ tickets|length }}</p>
+                        </div>
+                        <svg class="w-12 h-12 text-green-100" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12z"/></svg>
+                    </div>
+
+                    <!-- Bloc pour le nombre de tickets en attente -->
+                    <div class="bg-white shadow-lg rounded-lg p-5 flex items-center justify-between">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-700">Tickets en Attente</h3>
+                            <p class="text-2xl font-bold text-red-600">{{ pending_tickets|length }}</p>
+                        </div>
+                        <svg class="w-12 h-12 text-red-100" fill="currentColor" viewBox="0 0 20 20"><path d="M10.293,7.293L15.293,12.293L14.879,12.707L10.293,8.121L10.293,7.293z M15,3H5C3.895,3,3,3.895,3,5v10c0,1.105,0.895,2,2,2h10c1.105,0,2-0.895,2-2V5C17,3.895,16.105,3,15,3z"/></svg>
+                    </div>
+                </div>
+
+                <!-- Nouvelle section : Nos Serveurs -->
+                <div class="mt-8 bg-white shadow-lg rounded-lg p-5">
+                    <h2 class="font-semibold text-lg mb-4">Nos Serveurs</h2>
+                    <!-- Contenu des serveurs ici -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

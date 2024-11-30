@@ -1,0 +1,21 @@
+{# templates/dashboard/components/topbar.html.twig #}
+<header class="bg-gray-900 shadow-md fixed top-0 left-[256px] w-[calc(100%-256px)] z-10 flex justify-between items-center p-4">
+    <div class="text-lg font-bold text-white">ServeurPro</div>
+    <div class="flex items-center">
+        {% if user %}
+            <span class="text-gray-300">{{ user.firstname }} {{ user.lastname }}</span>
+            <a href="{{ path('app_logout') }}" class="ml-4 text-blue-400 hover:underline">Déconnexion</a>
+        {% else %}
+            <span class="text-gray-300">Invité</span>
+        {% endif %}
+
+        <!-- Icône du Panier -->
+        <div class="relative ml-6">
+            <a href="{{ path('app_cart') }}" class="text-gray-300 hover:text-white flex items-center">
+                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12z"/><path d="M7.5 9h5l1.5-3H6l1.5 3z"/></svg>
+                <!-- Badge pour le nombre d'articles dans le panier -->
+                <span class="absolute top-0 right-0 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">{{ cartItemCount }}</span>
+            </a>
+        </div>
+    </div>
+</header>

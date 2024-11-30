@@ -1,0 +1,46 @@
+{# templates/dashboard/components/sidebar.html.twig #}
+<aside class="w-64 bg-gray-800 text-white shadow-lg h-screen fixed">
+    <div class="p-6">
+        <h2 class="text-xl font-bold mb-4">Menu</h2>
+        <nav class="mt-4">
+            <ul>
+                <li>
+                    <a href="{{ path('app_dashboard') }}" class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-700 transition duration-200 rounded">
+                        <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12z"/></svg>
+                        Mon Profil
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('app_products') }}" class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-700 transition duration-200 rounded">
+                        <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12z"/></svg>
+                        Nos Produits
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('app_orders') }}" class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-700 transition duration-200 rounded">
+                        <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12z"/></svg>
+                        Mes Commandes
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('app_tickets') }}" class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-700 transition duration-200 rounded">
+                        <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20"><path d="M10.293,7.293L15.293,12.293L14.879,12.707L10.293,8.121L10.293,7.293z M15,3H5C3.895,3,3,3.895,3,5v10c0,1.105,0.895,2,2,2h10c1.105,0,2-0.895,2-2V5C17,3.895,16.105,3,15,3z"/></svg>
+                        Mes Tickets
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('app_user_settings') }}" class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-700 transition duration-200 rounded">
+                        <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20"><path d="M10.293,7.293L15.293,12.293L14.879,12.707L10.293,8.121L10.293,7.293z M15,3H5C3.895,3,3,3.895,3,5v10c0,1.105,0.895,2,2,2h10c1.105,0,2-0.895,2-2V5C17,3.895,16.105,3,15,3z"/></svg>
+                        Paramètres
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('app_logout') }}" class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-700 transition duration-200 rounded">
+                        <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20"><path d="M10.293,7.293L15.293,12.293L14.879,12.707L10.293,8.121L10.293,7.293z M15,3H5C3.895,3,3,3.895,3,5v10c0,1.105,0.895,2,2,2h10c1.105,0,2-0.895,2-2V5C17,3.895,16.105,3,15,3z"/></svg>
+                        Déconnexion
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</aside>

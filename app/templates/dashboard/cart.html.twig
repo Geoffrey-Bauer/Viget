@@ -1,0 +1,109 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Panier{% endblock %}
+
+{% block body %}
+    <div class="flex flex-row">
+        {% include 'dashboard/components/sidebar.html.twig' %}
+
+        <div class="flex-grow ml-64">
+            {% include 'dashboard/components/topbar.html.twig' %}
+
+            <div class="p-8 bg-gray-50 min-h-screen">
+                <h1 class="text-4xl font-bold mb-8 text-gray-800">Mon Panier</h1>
+
+                {% include 'dashboard/components/messages.html.twig' %}
+
+                {% if orders is empty %}
+                    <div class="bg-white shadow-lg rounded-lg p-6 text-center">
+                        <img src="{{ asset('styles/empty-cart.png') }}" alt="Panier vide" class="mx-auto mb-4 w-32 h-32" />
+                        <p class="text-lg text-gray-600 mb-4">Aucun article dans votre panier.</p>
+                        <a href="{{ path('app_products') }}"
+                           class="mt-4 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-200">
+                            Explorer les produits
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="bg-white shadow-lg rounded-lg p-6 mb-6">
+                        <h2 class="text-xl font-semibold mb-4">Articles dans le panier</h2>
+                        <div class="space-y-4">
+                            {% set total = 0 %} {# Initialisation du total #}
+                            {% for order in orders %}
+                                <div class="flex items-start bg-gray-100 border border-gray-300 rounded-lg p-4 transition-transform transform hover:scale-[1.02] duration-200 ease-in-out">
+                                    <div class="flex-grow">
+                                        <h3 class="text-lg font-semibold text-gray-800">{{ order.offer.name }}</h3>
+                                        <p class="mt-1 text-gray-600">Processeur: {{ order.offer.processor }}</p>
+                                        <p class="mt-1 text-gray-600">RAM: {{ order.offer.ram }} Go</p>
+                                        <p class="mt-1 text-gray-600">Stockage: {{ order.offer.storage }} Go</p>
+                                        <p class="mt-1 text-gray-600">Bande passante: {{ order.offer.bandwidth }} Mbps</p>
+                                        <p class="mt-4 text-xl font-bold text-blue-600">{{ order.totalAmount|number_format(2) }} €</p>
+                                    </div>
+                                    <!-- Icône pour retirer l'article -->
+                                    <a href="{{ path('app_remove_from_cart', { id: order.id }) }}"
+                                       onclick="event.preventDefault(); showRemovalMessage(event, '{{ order.offer.name }}');"
+                                       class="ml-4 bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 transition duration-200 flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m6 0H9m6 0a2.25 2.25 0 01-.75 4.5M9 12a2.25 2.25 0 00.75 4.5m6 0A2.25 2.25 0 0015 12m0 0V8.25m0 3.75V12m6 8.25H3.75A1.125 1.125 0 012.625 19l-.375-.375A1.125 1.125 0 013.75 17h15.5a1.125 1.125 0 011.125 1.125v1A1.125 1.125 0 0118.625 20z" />
+                                        </svg>
+                                        Retirer
+                                    </a>
+                                    {# Formulaire pour supprimer l'article #}
+                                    <form id="remove-form-{{ order.id }}" action="{{ path('app_remove_from_cart', { id: order.id }) }}" method="POST" style="display: none;">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ order.id) }}">
+                                    </form>
+                                </div>
+                                {% set total = total + order.totalAmount %} {# Calculer le total #}
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="bg-white shadow-lg rounded-lg p-6">
+                        <h2 class="text-xl font-semibold mb-4">Total à Payer</h2>
+                        <p class="text-lg font-bold text-blue-600 mb-4">
+                            Total : {{ total|number_format(2) }} €
+                        </p>
+                        <a href="{{ path('app_checkout') }}"
+                           class="mt-4 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition duration=200 w-full text-center">
+                            Payer
+                        </a>
+                    </div>
+
+                    <!-- Message de confirmation -->
+                    <div id="removal-message" class="hidden fixed top-[20%] right-[10%] bg-green500 text-white p=4 rounded shadow-lg z=[100] transition-opacity duration=[300ms]"></div>
+
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showRemovalMessage(event, productName) {
+            event.preventDefault(); // Empêche le lien de naviguer immédiatement
+
+            // Récupérer l'élément du message
+            const messageElement = document.getElementById('removal-message');
+
+            // Mettre à jour le contenu du message
+            messageElement.textContent = `${productName} a été retiré du panier !`;
+
+            // Afficher le message
+            messageElement.classList.remove('hidden');
+            messageElement.classList.add('opacity-[1]');
+
+            // Démarrer un timer pour masquer le message après un certain temps
+            setTimeout(() => {
+                messageElement.classList.remove('opacity-[1]');
+                messageElement.classList.add('opacity-[0]');
+                setTimeout(() => {
+                    messageElement.classList.add('hidden');
+                }, 300); // Délai pour cacher complètement après l'animation
+            }, 5000); // Masquer après 5 secondes
+
+            // Effectuer la suppression après un court délai pour permettre l'affichage du message
+            setTimeout(() => {
+                window.location.href = event.target.href; // Redirige vers l'URL de suppression
+            }, 100); // Délai de redirection de courte durée (100 ms)
+        }
+    </script>
+
+{% endblock %}

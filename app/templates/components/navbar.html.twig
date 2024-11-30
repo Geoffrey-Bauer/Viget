@@ -1,0 +1,145 @@
+{# templates/components/navbar.html.twig #}
+<header class="bg-white shadow-md fixed w-full z-50">
+    <nav class="container mx-auto px-4 py-3">
+        <div class="flex justify-between items-center">
+            <!-- Logo -->
+            <a href="/" class="flex items-center space-x-2">
+                <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+                <span class="text-2xl font-bold text-blue-800">VIGET</span>
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#" class="text-gray-600 hover:text-blue-600 transition duration-300">Accueil</a>
+                <a href="#" class="text-gray-600 hover:text-blue-600 transition duration-300">Offres</a>
+                <a href="#" class="text-gray-600 hover:text-blue-600 transition duration-300">Services</a>
+
+                {% if app.user %}
+                    <!-- Dropdown for Mon Compte -->
+                    <div class="dropdown relative">
+                        <button id="account-dropdown-button" class="text-gray-600 hover:text-blue-600 transition duration-300 focus:outline-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            Mon Compte
+                        </button>
+                        <ul id="account-dropdown-menu" class="dropdown-menu absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg hidden z-10">
+                            <li><a href="{{ path('app_dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Panel</a></li>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <li><a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Panel Admin</a></li>
+                            {% endif %}
+                            <li>
+                                <form method="post" action="{{ path('app_logout') }}" style="display: inline;">
+                                    <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Déconnexion</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                {% else %}
+                    <a href="{{ path('app_login') }}" class="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition duration=300">Connexion</a>
+                {% endif %}
+            </div>
+
+            <!-- Hamburger Icon -->
+            <div class="md:hidden">
+                <button id="menu-toggle" class="focus:outline-none">
+                    <svg id="hamburger-icon" class="w-6 h-6 text-blue-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m -7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Sidebar -->
+    <div id="mobile-menu" class="fixed inset-y-0 right-0 bg-white shadow-lg w-64 p-6 z-50 transform translate-x-full transition-transform duration-300 ease-in-out">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-xl font-bold text-blue-800">Menu</h2>
+            <!-- Close Button with Custom Cross Design -->
+            <button id="close-menu" class="relative w-8 h-8 focus:outline-none">
+                <div class="absolute top-[50%] left-[50%] transform -translate-x-[50%] -translate-y-[50%] w-full h-[2px] bg-gray-500 rotate-[45deg]"></div>
+                <div class="absolute top-[50%] left-[50%] transform -translate-x-[50%] -translate-y-[50%] w-full h-[2px] bg-gray-500 -rotate-[45deg]"></div>
+            </button>
+        </div>
+
+        <div class = "flex flex-col space-y -4">
+            <a href="#"
+               class = "text-gray -600 hover:text-blue -600 transition duration=300">Accueil</a>
+            <a href="#"
+               class = "text-gray -600 hover:text-blue -600 transition duration=300">Offres</a>
+            <a href="#"
+               class = "text-gray -600 hover:text-blue -600 transition duration=300">Services</a>
+
+            {% if app.user %}
+                <!-- Mobile Dropdown for Mon Compte -->
+                <div>
+                    <button id = "mobile-account-dropdown-button"
+                            class = "text-gray -600 hover:text-blue -600 transition duration=300 focus:outline-none">
+                        Mon Compte
+                    </button>
+                    <div id = "mobile-account-dropdown-menu"
+                         class = "-mt -1 absolute right -0 mt -2 w -48 bg-white rounded-md shadow-lg hidden z -10">
+                        <div class = "py -1">
+                            <a href="{{ path('app_dashboard') }}"
+                               class = "block px -4 py -2 text -sm text-gray -700 hover:bg-gray -100">Panel</a>
+
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a href="#"
+                                   class = "block px -4 py -2 text -sm text-gray -700 hover:bg-gray -100">Panel Admin</a>
+                            {% endif %}
+
+                            <!-- Logout Form -->
+                            <form method = "post"
+                                  action="{{ path('app_logout') }}"
+                                  style = "display: inline;">
+                                <button type = "submit"
+                                        class = "block w-full text-left px -4 py -2 text -sm text-gray -700 hover:bg-gray -100">Déconnexion</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <a href="{{ path('app_login') }}"
+                   class = "bg-blue -600 text-white px -4 py -2 rounded-full hover:bg-blue -700 transition duration=300 text-center">Connexion</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Overlay for Sidebar -->
+    <div id = "overlay"
+         class = "fixed inset -0 bg-black opacity -50 z -40 hidden"></div>
+
+    <!-- JavaScript for Menu Functionality -->
+    <script src="//code.jquery.com/jquery.min.js"></script>
+
+    <!-- Ensure that Bootstrap's JavaScript is loaded properly -->
+    <script src="//stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom Script for Menu Functionality -->
+    <script>
+        $(document).ready(function() {
+            // Toggle mobile menu
+            $('#menu-toggle').on('click', function() {
+                $('#mobile-menu').toggleClass('translate-x-full');
+                $('#overlay').toggleClass('hidden');
+            });
+
+            $('#close-menu, #overlay').on('click', function() {
+                $('#mobile-menu').addClass('translate-x-full');
+                $('#overlay').addClass('hidden');
+            });
+
+            // Dropdown functionality for desktop
+            $('#account-dropdown-button').on('click', function() {
+                $('#account-dropdown-menu').toggleClass('hidden');
+            });
+
+            // Close dropdown when clicking outside
+            $(document).on('click', function(event) {
+                if (!$(event.target).closest('#account-dropdown-button').length) {
+                    $('#account-dropdown-menu').addClass('hidden');
+                }
+            });
+        });
+    </script>
+
+</header>

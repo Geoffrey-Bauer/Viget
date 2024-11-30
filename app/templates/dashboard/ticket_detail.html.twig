@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ticket #{{ ticket.id }}{% endblock %}
+
+{% block body %}
+    <div class="flex h-screen bg-gray-100">
+        {% include 'dashboard/components/sidebar.html.twig' %}
+
+        <div class="flex-1 flex flex-col overflow-hidden">
+            {% include 'dashboard/components/topbar.html.twig' %}
+
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
+
+                {% include 'dashboard/components/messages.html.twig' %}
+
+                <div class="container mx-auto px-8 py-8">
+                    <h1 class="text-4xl font-bold text-gray-800 mb-6">Ticket #{{ ticket.id }} - {{ ticket.subject }}</h1>
+
+                    <div class="bg-white shadow-lg rounded-lg p-6 mb-6">
+                        <div class="flex justify-between items-center mb-4">
+                        <span class="px-3 py-1 rounded-full text-sm font-semibold
+                            {% if ticket.status == 'Clôturé' %}
+                                bg-red-100 text-red-800
+                            {% elseif ticket.status == 'En attente' %}
+                                bg-orange-100 text-orange-800
+                            {% else %}
+                                bg-green-100 text-green-800
+                            {% endif %}
+                        ">
+                            {{ ticket.status }}
+                        </span>
+                            <p class="text-sm text-gray-600">Créé le: {{ ticket.creationDate|date('d/m/Y H:i') }}</p>
+                        </div>
+                        <p class="text-gray-700 mt-2">{{ ticket.description }}</p>
+
+                        {% if ticket.purchase %}
+                            <div class="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                                <h3 class="text-lg font-semibold text-blue-800 mb-2">Commande associée</h3>
+                                <p class="text-sm text-gray-700">Commande #{{ ticket.purchase.id }}</p>
+                                <p class="text-sm text-gray-700">Offre : {{ ticket.purchase.offer.name }}</p>
+                                <p class="text-sm text-gray-700">Montant : {{ ticket.purchase.totalAmount|number_format(2, ',', ' ') }} €</p>
+                                <p class="text-sm text-gray-700">Statut : {{ ticket.purchase.status }}</p>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="space-y-4">
+                        {% for response in ticket.ticketResponses %}
+                            <div class="flex {% if response.user.roles[0] == 'ROLE_ADMIN' %}justify-end{% endif %}">
+                                <div class="bg-white shadow rounded-lg p-4 max-w-md {% if response.user.roles[0] == 'ROLE_ADMIN' %}bg-blue-50{% endif %}">
+                                    <p class="text-sm text-gray-600 mb-1 {% if response.user.roles[0] == 'ROLE_ADMIN' %}text-right{% endif %}">
+                                        {% if response.user.roles[0] == 'ROLE_ADMIN' %}
+                                            Administrateur
+                                        {% else %}
+                                            Vous
+                                        {% endif %}
+                                        - {{ response.responseDate|date('d/m/Y H:i') }}
+                                    </p>
+                                    <p class="text-gray-800 {% if response.user.roles[0] == 'ROLE_ADMIN' %}text-right{% endif %}">{{ response.message }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    {% if ticket.status != 'Clôturé' %}
+                        <div class="mt-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Ajouter une réponse</h3>
+                            {{ form_start(form, {'attr': {'class': 'space-y-4'}}) }}
+                            {{ form_row(form.message, {'attr': {'class': 'w-full p-3 border rounded-lg focus:outline-none focus:ring focus:ring-blue-500'}}) }}
+                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+                                Envoyer la réponse
+                            </button>
+                            {{ form_end(form) }}
+                        </div>
+                    {% endif %}
+
+                    {% if ticket.status != 'Clôturé' %}
+                        <a href="{{ path('app_close_ticket', {'id': ticket.id}) }}" class="inline-block mt-4 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition duration=300 ease-in-out transform hover:-translate-y1 hover:scale105">
+                            Clôturer le ticket
+                        </a>
+                    {% endif %}
+                </div>
+            </main>
+        </div>
+    </div>
+{% endblock %}

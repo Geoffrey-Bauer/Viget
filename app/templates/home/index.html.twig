@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil - Viget{% endblock %}
+
+{% block body %}
+    {% include 'components/navbar.html.twig' %}
+
+    {% include 'components/flash_messages.html.twig' %}
+
+    <main class="flex-grow">
+        <!-- Bannière -->
+        <header class="bg-gradient-to-r from-blue-600 to-indigo-800 text-white py-24">
+            <div class="container mx-auto px-4">
+                <div class="max-w-3xl mx-auto text-center">
+                    <h1 class="text-5xl font-extrabold mb-6">L'univers des solutions web</h1>
+                    <p class="text-xl mb-8">Trouvez le meilleur univers pour vos besoins personnels ou professionnels.</p>
+                    <a href="#offres" class="bg-white text-blue-600 font-semibold px-6 py-3 rounded-full hover:bg-blue-100 transition duration-300">Découvrir nos offres</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Section des Offres -->
+        <section id="offres" class="py-24 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center mb-16">Nos Offres</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {% for offer in offers %}
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+                            <div class="bg-gradient-to-r from-blue-500 to-indigo-600 p-6">
+                                <h3 class="text-2xl font-bold text-white">{{ offer.name }}</h3>
+                            </div>
+                            <div class="p-6">
+                                <ul class="mb-6 space-y-2">
+                                    <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Processeur: {{ offer.processor }}</li>
+                                    <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>RAM: {{ offer.ram }} GB</li>
+                                    <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Stockage: {{ offer.storage }} GB</li>
+                                    <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Bande passante: {{ offer.bandwidth }} Mbps</li>
+                                </ul>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-3xl font-bold text-blue-600">{{ offer.monthlyPrice }} €<span class="text-sm font-normal text-gray-500">/mois</span></span>
+                                    <a href="#" class="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition duration-300">Voir plus</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <p class="text-center text-gray-500 col-span-3">Aucune offre disponible.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Fonctionnalités -->
+        <section class="py-24 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center mb-16">Pourquoi Choisir Viget ?</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                    <div class="text-center">
+                        <div class="bg-blue-100 rounded-full p-6 inline-block mb-6">
+                            <svg class="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">Performance Optimale</h3>
+                        <p class="text-gray-600">Profitez d'un chargement rapide de vos pages pour une expérience utilisateur améliorée.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-blue-100 rounded-full p-6 inline-block mb-6">
+                            <svg class="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">Sécurité Avancée</h3>
+                        <p class="text-gray-600">Protection de vos données avec des sauvegardes régulières et des mesures de sécurité robustes.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-blue-100 rounded-full p-6 inline-block mb-6">
+                            <svg class="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">Support 24/7</h3>
+                        <p class="text-gray-600">Une équipe d'experts à votre disposition pour vous aider à chaque étape.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section d'Appel à l'Action -->
+        <section class="py-24 bg-gradient-to-r from-blue-600 to-indigo-800 text-white">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-4xl font-bold mb-6">Prêt à Démarrer ?</h2>
+                <p class="text-xl mb-8">Contactez-nous dès aujourd'hui pour discuter de vos besoins en hébergement.</p>
+                <a href="/contact" class="bg-white text-blue-600 font-semibold px-8 py-4 rounded-full hover:bg-blue-100 transition duration-300 text-lg">Nous Contacter</a>
+            </div>
+        </section>
+    </main>
+
+    {% include 'components/footer.html.twig' %}
+{% endblock %}

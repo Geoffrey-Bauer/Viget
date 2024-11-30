@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="flex items-center justify-center min-h-screen bg-gray-100">
+        <div class="p-8 bg-white shadow-lg rounded-lg text-center">
+            <svg class="mx-auto h-16 w-16 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            <h2 class="mt-6 text-3xl font-extrabold text-gray-900">{{ message }}</h2>
+            <p class="mt-2 text-sm text-gray-600">Vous serez redirigé vers le tableau de bord dans <span id="countdown">{{ redirect_time }}</span> secondes.</p>
+            <a href="{{ redirect_url }}" class="mt-4 inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                Retour au tableau de bord
+            </a>
+        </div>
+    </div>
+
+    <script>
+        let countdown = {{ redirect_time }};
+        const countdownDisplay = document.getElementById('countdown');
+        const countdownTimer = setInterval(() => {
+            countdown--;
+            countdownDisplay.textContent = countdown;
+            if (countdown <= 0) {
+                clearInterval(countdownTimer);
+                window.location.href = '{{ redirect_url }}';
+            }
+        }, 1000);
+    </script>
+{% endblock %}

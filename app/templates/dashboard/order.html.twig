@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Commandes{% endblock %}
+
+{% block body %}
+    <div class="flex flex-row">
+        {% include 'dashboard/components/sidebar.html.twig' %}
+
+        <div class="flex-grow ml-64">
+            {% include 'dashboard/components/topbar.html.twig' %}
+
+            <div class="p-6 pt-20 bg-gray-50 min-h-screen">
+                <h1 class="text-3xl font-bold mb-6">Mes Commandes</h1>
+
+                {% include 'dashboard/components/messages.html.twig' %}
+
+                {% for status, orders in groupedOrders %}
+                    <h2 class="text-2xl font-semibold mt-8 mb-4">{{ status }}</h2>
+                    {% if orders is empty %}
+                        <p class="text-gray-600">Aucune commande dans cette catégorie.</p>
+                    {% else %}
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {% for order in orders %}
+                                <div class="bg-white shadow-lg rounded-lg p-6">
+                                    <h3 class="text-lg font-semibold mb-2">Commande #{{ order.id }}</h3>
+                                    <p class="text-gray-600">Date: {{ order.orderDate|date('d/m/Y H:i') }}</p>
+                                    <p class="text-gray-600">Offre: {{ order.offer.name }}</p>
+                                    <p class="font-bold text-blue-600">Total: {{ order.totalAmount|number_format(2) }} €</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

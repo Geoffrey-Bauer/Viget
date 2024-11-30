@@ -1,0 +1,16 @@
+{# templates/components/messages.html.twig #}
+{% if app.session.flashBag.has('success') %}
+    <div class="bg-green-500 text-white p-4 rounded shadow-lg mb-4">
+        {% for message in app.session.flashBag.get('success') %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% if app.session.flashBag.has('error') %}
+    <div class="bg-red-500 text-white p-4 rounded shadow-lg mb-4">
+        {% for message in app.session.flashBag.get('error') %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
