@@ -10,25 +10,24 @@
             {% include 'dashboard/components/topbar.html.twig' %}
 
             <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
-
                 {% include 'dashboard/components/messages.html.twig' %}
 
                 <div class="container mx-auto px-8 py-8">
-                    <h1 class="text-4xl font-bold text-gray-800 mb-6">Ticket #{{ ticket.id }} - {{ ticket.subject }}</h1>
+                    <h1 class="text-4xl font-extrabold text-gray-800 mb-6">{{ ticket.subject }}</h1>
 
-                    <div class="bg-white shadow-lg rounded-lg p-6 mb-6">
+                    <div class="bg-white shadow-xl rounded-lg p-6 mb-6">
                         <div class="flex justify-between items-center mb-4">
-                        <span class="px-3 py-1 rounded-full text-sm font-semibold
-                            {% if ticket.status == 'Clôturé' %}
-                                bg-red-100 text-red-800
-                            {% elseif ticket.status == 'En attente' %}
-                                bg-orange-100 text-orange-800
-                            {% else %}
-                                bg-green-100 text-green-800
-                            {% endif %}
-                        ">
-                            {{ ticket.status }}
-                        </span>
+                            <span class="px-3 py-1 rounded-full text-sm font-semibold
+                                {% if ticket.status == 'Clôturé' %}
+                                    bg-red-100 text-red-800
+                                {% elseif ticket.status == 'En attente' %}
+                                    bg-orange-100 text-orange-800
+                                {% else %}
+                                    bg-green-100 text-green-800
+                                {% endif %}
+                            ">
+                                {{ ticket.status }}
+                            </span>
                             <p class="text-sm text-gray-600">Créé le: {{ ticket.creationDate|date('d/m/Y H:i') }}</p>
                         </div>
                         <p class="text-gray-700 mt-2">{{ ticket.description }}</p>
@@ -44,38 +43,51 @@
                         {% endif %}
                     </div>
 
-                    <div class="space-y-4">
+                    <!-- Discussion en temps réel (chat-like) -->
+                    <div class="space-y-6">
                         {% for response in ticket.ticketResponses %}
-                            <div class="flex {% if response.user.roles[0] == 'ROLE_ADMIN' %}justify-end{% endif %}">
-                                <div class="bg-white shadow rounded-lg p-4 max-w-md {% if response.user.roles[0] == 'ROLE_ADMIN' %}bg-blue-50{% endif %}">
-                                    <p class="text-sm text-gray-600 mb-1 {% if response.user.roles[0] == 'ROLE_ADMIN' %}text-right{% endif %}">
+                            <div class="flex {% if response.user.roles[0] == 'ROLE_ADMIN' %}justify-end{% else %}justify-start{% endif %}">
+                                <div class="max-w-xl p-4 bg-white rounded-lg shadow-lg {% if response.user.roles[0] == 'ROLE_ADMIN' %}bg-blue-50 text-right{% else %}bg-gray-100 text-left{% endif %}">
+                                    <div class="flex items-center {% if response.user.roles[0] == 'ROLE_ADMIN' %}justify-end{% else %}justify-start{% endif %}">
                                         {% if response.user.roles[0] == 'ROLE_ADMIN' %}
-                                            Administrateur
+                                            <div class="w-8 h-8 rounded-full bg-blue-600 text-white flex justify-center items-center mr-2">A</div>
                                         {% else %}
-                                            Vous
+                                            <div class="w-8 h-8 rounded-full bg-green-600 text-white flex justify-center items-center mr-2">V</div>
                                         {% endif %}
-                                        - {{ response.responseDate|date('d/m/Y H:i') }}
-                                    </p>
-                                    <p class="text-gray-800 {% if response.user.roles[0] == 'ROLE_ADMIN' %}text-right{% endif %}">{{ response.message }}</p>
+                                        <p class="text-sm font-semibold {% if response.user.roles[0] == 'ROLE_ADMIN' %}text-blue-600{% else %}text-green-600{% endif %}">
+                                            {% if response.user.roles[0] == 'ROLE_ADMIN' %}Administrateur{% else %}Vous{% endif %}
+                                        </p>
+                                    </div>
+                                    <p class="text-sm text-gray-600 mb-1">{{ response.responseDate|date('d/m/Y H:i') }}</p>
+                                    <p class="text-gray-800 text-base">{{ response.message }}</p>
                                 </div>
                             </div>
+                        {% else %}
+                            <p class="text-gray-600 text-center">Aucune réponse pour ce ticket.</p>
                         {% endfor %}
                     </div>
 
+                    <!-- Formulaire d'ajout de réponse -->
                     {% if ticket.status != 'Clôturé' %}
                         <div class="mt-6">
                             <h3 class="text-xl font-semibold text-gray-800 mb-4">Ajouter une réponse</h3>
                             {{ form_start(form, {'attr': {'class': 'space-y-4'}}) }}
-                            {{ form_row(form.message, {'attr': {'class': 'w-full p-3 border rounded-lg focus:outline-none focus:ring focus:ring-blue-500'}}) }}
-                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+                            {{ form_row(form.message, {
+                                'attr': {
+                                    'class': 'w-full p-4 border rounded-lg focus:outline-none focus:ring focus:ring-blue-500 focus:ring-opacity-50',
+                                    'placeholder': 'Écrivez votre message ici...'
+                                }
+                            }) }}
+                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
                                 Envoyer la réponse
                             </button>
                             {{ form_end(form) }}
                         </div>
                     {% endif %}
 
+                    <!-- Clôture du ticket -->
                     {% if ticket.status != 'Clôturé' %}
-                        <a href="{{ path('app_close_ticket', {'id': ticket.id}) }}" class="inline-block mt-4 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition duration=300 ease-in-out transform hover:-translate-y1 hover:scale105">
+                        <a href="{{ path('app_close_ticket', {'id': ticket.id}) }}" class="inline-block mt-4 bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
                             Clôturer le ticket
                         </a>
                     {% endif %}

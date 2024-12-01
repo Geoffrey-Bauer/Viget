@@ -16,35 +16,50 @@
 
                     {% include 'dashboard/components/messages.html.twig' %}
 
-                    <div class="bg-white shadow-md rounded-lg p-6">
+                    <div class="bg-white shadow-lg rounded-lg p-6">
                         <h2 class="text-xl font-semibold mb-6 text-gray-700">Informations Personnelles</h2>
 
                         {{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                {{ form_label(form.firstname, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
-                                {{ form_widget(form.firstname, {'attr': {'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50'}}) }}
+                                {{ form_label(form.firstname, null, {'label_attr': {'class': 'text-sm font-medium text-gray-700'}}) }}
+                                <div class="relative">
+                                    {{ form_widget(form.firstname, {'attr': {'class': 'w-full px-4 py-2 pl-10 rounded-md border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 transition ease-in-out'}}) }}
+                                    <span class="absolute left-3 top-2.5 text-gray-400"><i class="fas fa-user"></i></span>
+                                </div>
                             </div>
 
                             <div>
-                                {{ form_label(form.lastname, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
-                                {{ form_widget(form.lastname, {'attr': {'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50'}}) }}
+                                {{ form_label(form.lastname, null, {'label_attr': {'class': 'text-sm font-medium text-gray-700'}}) }}
+                                <div class="relative">
+                                    {{ form_widget(form.lastname, {'attr': {'class': 'w-full px-4 py-2 pl-10 rounded-md border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 transition ease-in-out'}}) }}
+                                    <span class="absolute left-3 top-2.5 text-gray-400"><i class="fas fa-user"></i></span>
+                                </div>
                             </div>
 
                             <div class="col-span-full">
-                                {{ form_label(form.address, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
-                                {{ form_widget(form.address, {'attr': {'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50', 'rows': '3'}}) }}
+                                {{ form_label(form.address, null, {'label_attr': {'class': 'text-sm font-medium text-gray-700'}}) }}
+                                <div class="relative">
+                                    {{ form_widget(form.address, {'attr': {'class': 'w-full px-4 py-2 pl-10 rounded-md border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 transition ease-in-out'}}) }}
+                                    <span class="absolute left-3 top-2.5 text-gray-400"><i class="fas fa-home"></i></span>
+                                </div>
                             </div>
 
                             <div>
-                                {{ form_label(form.zipcode, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
-                                {{ form_widget(form.zipcode, {'attr': {'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50'}}) }}
+                                {{ form_label(form.zipcode, null, {'label_attr': {'class': 'text-sm font-medium text-gray-700'}}) }}
+                                <div class="relative">
+                                    {{ form_widget(form.zipcode, {'attr': {'class': 'w-full px-4 py-2 pl-10 rounded-md border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 transition ease-in-out'}}) }}
+                                    <span class="absolute left-3 top-2.5 text-gray-400"><i class="fas fa-map-pin"></i></span>
+                                </div>
                             </div>
 
                             <div>
-                                {{ form_label(form.city, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
-                                {{ form_widget(form.city, {'attr': {'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50'}}) }}
+                                {{ form_label(form.city, null, {'label_attr': {'class': 'text-sm font-medium text-gray-700'}}) }}
+                                <div class="relative">
+                                    {{ form_widget(form.city, {'attr': {'class': 'w-full px-4 py-2 pl-10 rounded-md border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 transition ease-in-out'}}) }}
+                                    <span class="absolute left-3 top-2.5 text-gray-400"><i class="fas fa-city"></i></span>
+                                </div>
                             </div>
                         </div>
 
@@ -52,18 +67,33 @@
                             <h3 class="text-lg font-medium text-gray-900 mb-4">Sécurité</h3>
                             <div class="space-y-6">
                                 <div>
-                                    {{ form_label(form.currentPassword, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
-                                    {{ form_widget(form.currentPassword, {'attr': {'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50'}}) }}
+                                    {{ form_label(form.newPassword, null, {'label_attr': {'class': 'text-sm font-medium text-gray-700'}}) }}
+                                    <div class="relative">
+                                        {{ form_widget(form.newPassword, {'attr': {'class': 'w-full px-4 py-2 pl-10 rounded-md border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 transition ease-in-out'}}) }}
+                                        <span class="absolute left-3 top-2.5 text-gray-400"><i class="fas fa-lock"></i></span>
+                                    </div>
                                 </div>
 
                                 <div>
-                                    {{ form_label(form.newPassword, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
-                                    {{ form_widget(form.newPassword, {'attr': {'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50'}}) }}
+                                    {{ form_label(form.confirmNewPassword, null, {'label_attr': {'class': 'text-sm font-medium text-gray-700'}}) }}
+                                    <div class="relative">
+                                        {{ form_widget(form.confirmNewPassword, {'attr': {'class': 'w-full px-4 py-2 pl-10 rounded-md border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 transition ease-in-out'}}) }}
+                                        <span class="absolute left-3 top-2.5 text-gray-400"><i class="fas fa-lock"></i></span>
+                                    </div>
                                 </div>
+                            </div>
+                        </div>
 
+                        <div class="mt-8 pt-5 border-t border-gray-200 pt-6">
+                            <p class="text-sm text-gray-600 mb-4">Pour valider les modifications, veuillez entrer votre mot de passe actuel ci-dessous.</p>
+
+                            <div class="space-y-6">
                                 <div>
-                                    {{ form_label(form.confirmNewPassword, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
-                                    {{ form_widget(form.confirmNewPassword, {'attr': {'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50'}}) }}
+                                    {{ form_label(form.currentPassword, null, {'label_attr': {'class': 'text-sm font-medium text-gray-700'}}) }}
+                                    <div class="relative">
+                                        {{ form_widget(form.currentPassword, {'attr': {'class': 'w-full px-4 py-2 pl-10 rounded-md border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 transition ease-in-out'}}) }}
+                                        <span class="absolute left-3 top-2.5 text-gray-400"><i class="fas fa-lock"></i></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>

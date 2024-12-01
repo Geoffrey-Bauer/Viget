@@ -1,21 +1,47 @@
-{# templates/dashboard/components/topbar.html.twig #}
-<header class="bg-gray-900 shadow-md fixed top-0 left-[256px] w-[calc(100%-256px)] z-10 flex justify-between items-center p-4">
-    <div class="text-lg font-bold text-white">ServeurPro</div>
-    <div class="flex items-center">
-        {% if user %}
-            <span class="text-gray-300">{{ user.firstname }} {{ user.lastname }}</span>
-            <a href="{{ path('app_logout') }}" class="ml-4 text-blue-400 hover:underline">Déconnexion</a>
-        {% else %}
-            <span class="text-gray-300">Invité</span>
-        {% endif %}
+<header class="bg-gray-900 fixed top-0 left-64 w-[calc(100%-256px)] h-16 flex justify-between items-center px-6 z-40 shadow-lg">
+    <!-- Titre -->
+    <div class="text-xl font-bold text-white"></div>
 
+    <!-- Recherche -->
+    <div class="relative flex-1 mx-6 max-w-xl">
+        <input
+                type="text"
+                placeholder="Rechercher..."
+                class="w-full bg-gray-800 text-white rounded-full pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+        />
+        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 15l3-3m0 0l3-3m-3 3h6m0 6h-6" />
+        </svg>
+    </div>
+
+    <!-- Profil utilisateur et Panier -->
+    <div class="flex items-center space-x-6">
         <!-- Icône du Panier -->
-        <div class="relative ml-6">
+        <div class="relative">
             <a href="{{ path('app_cart') }}" class="text-gray-300 hover:text-white flex items-center">
-                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12z"/><path d="M7.5 9h5l1.5-3H6l1.5 3z"/></svg>
+                <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2m0 0L8 15h8l2.6-10H5.4m0 0L6 5m0 0H21M16 13a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
                 <!-- Badge pour le nombre d'articles dans le panier -->
-                <span class="absolute top-0 right-0 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">{{ cartItemCount }}</span>
+                <span class="absolute -top-1 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                    {{ cartItemCount }}
+                </span>
             </a>
         </div>
+
+        <!-- Profil utilisateur -->
+        {% if app.user %}
+            <div class="flex items-center space-x-3">
+                <div class="flex flex-col items-end">
+                    <span class="text-sm font-semibold text-gray-100">
+                        {{ app.user.firstname }} {{ app.user.lastname }}
+                    </span>
+                    <span class="text-xs text-gray-400">Client</span>
+                </div>
+                <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold uppercase">
+                    {{ app.user.firstname|first }}{{ app.user.lastname|first }}
+                </div>
+            </div>
+        {% endif %}
     </div>
 </header>

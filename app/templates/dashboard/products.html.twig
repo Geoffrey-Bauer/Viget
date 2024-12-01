@@ -1,4 +1,3 @@
-{# templates/dashboard/products.html.twig #}
 {% extends 'base.html.twig' %}
 
 {% block title %}Nos Produits{% endblock %}
@@ -19,17 +18,25 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {% for offer in offers %}
                         <div class="bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105 duration-300 ease-in-out">
+                            <div class="relative">
+                                <img src="{{ asset('styles/server.png') }}" alt="{{ offer.name }}" class="w-full h-48 object-cover">
+                                <div class="absolute top-2 left-2 bg-blue-500 text-white text-xs font-bold py-1 px-2 rounded">
+                                    {{ offer.category|default('Serveur') }}
+                                </div>
+                            </div>
                             <div class="p-5">
                                 <h3 class="text-xl font-semibold text-gray-800 hover:text-blue-600 transition duration-200">{{ offer.name }}</h3>
-                                <p class="mt-2 text-gray-600">Processeur: <span class="font-medium">{{ offer.processor }}</span></p>
-                                <p class="mt-2 text-gray-600">RAM: <span class="font-medium">{{ offer.ram }} Go</span></p>
-                                <p class="mt-2 text-gray-600">Stockage: <span class="font-medium">{{ offer.storage }} Go</span></p>
-                                <p class="mt-2 text-gray-600">Bande passante: <span class="font-medium">{{ offer.bandwidth }} Mbps</span></p>
+                                <ul class="mt-3 text-gray-600 space-y-1">
+                                    <li><span class="font-medium">Processeur:</span> {{ offer.processor }}</li>
+                                    <li><span class="font-medium">RAM:</span> {{ offer.ram }} Go</li>
+                                    <li><span class="font-medium">Stockage:</span> {{ offer.storage }} Go</li>
+                                    <li><span class="font-medium">Bande passante:</span> {{ offer.bandwidth }} Mbps</li>
+                                </ul>
                                 <p class="mt-4 text-xl font-bold text-blue-600">{{ offer.monthlyPrice|number_format(2) }} € / mois</p>
                             </div>
-                            <div class="bg-gradient-to-r from-blue-500 to-blue-700 p-4 text-center"> <!-- Gradient pour le bouton -->
+                            <div class="bg-gradient-to-r from-blue-500 to-blue-700 p-4 text-center">
                                 <a href="{{ path('app_add_to_cart', { id: offer.id }) }}"
-                                   class="text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 transition duration-200 w-full">
+                                   class="text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 transition duration-200 w-full block">
                                     Ajouter au Panier
                                 </a>
                             </div>
@@ -39,5 +46,4 @@
             </div>
         </div>
     </div>
-
 {% endblock %}

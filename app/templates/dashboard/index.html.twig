@@ -9,7 +9,7 @@
         <div class="flex-grow ml-64"> <!-- Compensation de la largeur de la sidebar -->
             {% include 'dashboard/components/topbar.html.twig' %}
 
-            <div class="pt-16 p-6"> <!-- Ajout d'un padding-top pour éviter que le contenu soit masqué par la topbar -->
+            <div class="pt-16 p-6 mt-6"> <!-- Ajout d'un margin-top pour espacer le titre de la topbar -->
                 <h1 class="text-3xl font-bold mb-6">Bienvenue sur votre Dashboard, {{ user.firstname }}!</h1>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -41,10 +41,12 @@
                     </div>
                 </div>
 
-                <!-- Nouvelle section : Nos Serveurs -->
-                <div class="mt-8 bg-white shadow-lg rounded-lg p-5">
-                    <h2 class="font-semibold text-lg mb-4">Nos Serveurs</h2>
-                    <!-- Contenu des serveurs ici -->
+                <!-- Message du staff -->
+                <div class="mt-8 bg-white shadow-lg rounded-lg p-6">
+                    <h2 class="font-semibold text-lg text-blue-600 mb-4">Message du Staff</h2>
+                    <p class="text-lg text-gray-700">Nous sommes ravis de vous annoncer l'ouverture officielle de notre site ! Merci beaucoup pour la confiance que vous nous accordez. Nous avons mis en place une plateforme innovante pour répondre à tous vos besoins, et nous sommes là pour vous accompagner tout au long de votre expérience.</p>
+                    <p class="mt-4 text-lg text-gray-700">N'hésitez pas à explorer toutes les fonctionnalités disponibles, et si vous avez des questions ou des suggestions, notre équipe est toujours prête à vous aider.</p>
+                    <p class="mt-4 text-lg font-semibold text-gray-700">Merci encore et à très bientôt sur notre plateforme !</p>
                 </div>
 
             </div>
