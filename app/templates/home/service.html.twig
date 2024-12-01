@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos Services - Viget{% endblock %}
+
+{% block body %}
+    <div class="bg-gradient-to-r from-blue-900 via-indigo-900 to-black">
+
+        <!-- Navbar -->
+        {% include 'components/navbar.html.twig' %}
+
+        <!-- Section Introduction -->
+        <div class="max-w-screen-xl mx-auto py-24 px-8 text-center text-white">
+            <h2 class="text-5xl font-extrabold leading-tight mb-8">Nos Services : Disponibilité 24/7, Expertise et Fiabilité</h2>
+            <p class="text-lg text-gray-300 mb-8">Chez Viget, nous sommes fiers de vous offrir des services d’hébergement haute performance, accessibles à tout moment, partout dans le monde. Notre équipe, disponible 24 heures sur 24 et 7 jours sur 7, se consacre à la qualité de vos services, assurant un support réactif et une infrastructure solide.</p>
+            <p class="text-xl text-gray-400">Nous mettons en œuvre des solutions technologiques avancées et un service client exceptionnel pour accompagner nos clients dans tous leurs projets d’hébergement. Découvrez comment notre équipe dédiée peut transformer vos besoins en solutions concrètes.</p>
+        </div>
+
+        <!-- Section Disponibilité 24/7 -->
+        <div class="max-w-screen-xl mx-auto py-32 px-8 text-center">
+            <div class="bg-white rounded-xl shadow-2xl overflow-hidden">
+                <div class="bg-gradient-to-r from-indigo-600 to-blue-600 p-12">
+                    <h3 class="text-4xl font-extrabold text-white">Disponible 24/7, 365 jours par an</h3>
+                </div>
+                <div class="p-12">
+                    <p class="text-lg text-gray-700 mb-6">Nos services sont accessibles à tout moment grâce à notre infrastructure de pointe et à notre équipe d’experts, toujours prêts à intervenir pour résoudre vos problèmes en temps réel.</p>
+                    <p class="text-lg text-gray-700">Que ce soit pour la gestion de votre serveur, l’assistance technique ou des conseils d’optimisation, notre équipe est présente en permanence pour vous assurer un service ininterrompu et de haute qualité.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Notre Équipe -->
+        <div class="max-w-screen-xl mx-auto py-32 px-8 text-center text-white">
+            <h2 class="text-5xl font-extrabold mb-8">Notre Équipe : 15 Experts Dévoués</h2>
+            <p class="text-xl text-gray-300 mb-12">Notre équipe de 15 experts en hébergement travaille sans relâche pour vous offrir des solutions adaptées à vos besoins. Que ce soit pour la gestion de vos infrastructures ou pour vous fournir un support technique à la demande, nous garantissons un service rapide et efficace.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-16">
+                <div class="bg-white rounded-xl shadow-2xl p-8 text-center transition-transform transform hover:scale-105 hover:shadow-lg duration-300">
+                    <h3 class="text-2xl font-semibold text-indigo-700">Expertise</h3>
+                    <p class="text-gray-600 mt-4">Une équipe dédiée à la performance de vos services et à l’optimisation de vos infrastructures.</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-2xl p-8 text-center transition-transform transform hover:scale-105 hover:shadow-lg duration-300">
+                    <h3 class="text-2xl font-semibold text-indigo-700">Disponibilité</h3>
+                    <p class="text-gray-600 mt-4">Disponible à tout moment pour résoudre rapidement toutes vos préoccupations techniques.</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-2xl p-8 text-center transition-transform transform hover:scale-105 hover:shadow-lg duration-300">
+                    <h3 class="text-2xl font-semibold text-indigo-700">Innovation</h3>
+                    <p class="text-gray-600 mt-4">Nous intégrons les dernières technologies pour vous offrir des solutions toujours plus performantes.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Services Détails -->
+        <div class="max-w-screen-xl mx-auto py-32 px-8 text-center text-white">
+            <h2 class="text-5xl font-extrabold mb-8">Nos Services d'Hébergement</h2>
+            <p class="text-xl text-gray-300 mb-12">Nous proposons une large gamme de services d'hébergement conçus pour répondre aux besoins variés de nos clients. Que vous soyez une entreprise, une startup ou un particulier, nous avons une solution adaptée à vos besoins.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-16">
+                <div class="bg-white rounded-xl shadow-2xl p-8 transition-transform transform hover:scale-105 hover:shadow-lg duration-300">
+                    <h3 class="text-2xl font-semibold text-indigo-700 mb-4">Hébergement Web</h3>
+                    <p class="text-gray-600">Des solutions d'hébergement web performantes pour vos sites et applications, avec un temps de disponibilité optimal.</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-2xl p-8 transition-transform transform hover:scale-105 hover:shadow-lg duration-300">
+                    <h3 class="text-2xl font-semibold text-indigo-700 mb-4">Hébergement VPS</h3>
+                    <p class="text-gray-600">Des serveurs privés virtuels (VPS) pour un contrôle total de votre infrastructure, avec des ressources dédiées.</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-2xl p-8 transition-transform transform hover:scale-105 hover:shadow-lg duration-300">
+                    <h3 class="text-2xl font-semibold text-indigo-700 mb-4">Hébergement Cloud</h3>
+                    <p class="text-gray-600">Des solutions d'hébergement cloud scalables et flexibles, idéales pour les entreprises en croissance rapide.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Informations sur l'entreprise -->
+        <div class="max-w-screen-xl mx-auto py-32 px-8 text-center text-white">
+            <h2 class="text-5xl font-extrabold mb-8">Qui Sommes-Nous ?</h2>
+            <p class="text-xl text-gray-300 mb-8">Viget est une société française d’hébergement informatique, fondée en 2015, avec l’ambition de fournir des services d’hébergement de haute qualité pour les entreprises de toutes tailles. Nous sommes enregistrés sous le numéro SIRET 123 456 789 00012, et nous avons à cœur de proposer un service à la hauteur des exigences de nos clients.</p>
+            <p class="text-xl text-gray-300">Nous nous engageons à offrir des services fiables, performants et évolutifs, pour accompagner nos clients dans la réussite de leurs projets numériques.</p>
+        </div>
+
+        <!-- Section d'Appel à l'Action -->
+        <div class="py-24 bg-gradient-to-r from-blue-800 via-indigo-800 to-indigo-600 text-white text-center">
+            <h2 class="text-4xl font-extrabold mb-8">Prêt à Rejoindre Viget ?</h2>
+            <p class="text-lg mb-12">Contactez-nous pour en savoir plus sur nos solutions d'hébergement et découvrir comment nous pouvons vous aider à atteindre vos objectifs.</p>
+            <a href="{{ path('app_contact') }}" class="bg-white text-blue-600 text-lg font-semibold py-4 px-8 rounded-full hover:bg-blue-100 transition duration-300">Nous Contacter</a>
+        </div>
+
+    </div>
+
+    {% include 'components/footer.html.twig' %}
+{% endblock %}

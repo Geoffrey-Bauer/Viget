@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Offer;
+use App\Repository\OfferRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,5 +20,29 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig', [
             'offers' => $offers,
         ]);
+    }
+
+    //----------- PRODUCTS ----------
+    #[Route('/products', name: 'app_offers')]
+    public function offers(OfferRepository $offerRepository): Response
+    {
+        $offers = $offerRepository->findAll(); // Récupérer toutes les offres
+        return $this->render('home/offer.html.twig', [
+            'offers' => $offers,
+        ]);
+    }
+
+    //---------- SERVICE --------------
+    #[Route('/services', name: 'app_services')]
+    public function services(): Response
+    {
+        return $this->render('home/service.html.twig');
+    }
+
+    //--------- CONTACT -----------------
+    #[Route('/contact', name: 'app_contact')]
+    public function contact(): Response
+    {
+        return $this->render('home/contact.html.twig');
     }
 }

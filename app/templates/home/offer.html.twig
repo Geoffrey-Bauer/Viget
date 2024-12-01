@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos Offres - Viget{% endblock %}
+
+{% block body %}
+    <div class="bg-gradient-to-r from-blue-900 via-indigo-900 to-black">
+
+        <!-- Navbar -->
+        {% include 'components/navbar.html.twig' %}
+
+        <!-- Section Message qualité des produits -->
+        <div class="max-w-screen-xl mx-auto py-24 px-8 text-center text-white">
+            <h2 class="text-5xl font-extrabold leading-tight mb-8">L'Excellence de Nos Produits</h2>
+            <p class="text-xl text-gray-300 mb-8">Chez **Viget**, nous nous engageons à fournir des solutions d'hébergement à la pointe de la technologie. Nos offres sont conçues pour offrir des performances exceptionnelles, une sécurité maximale et une fiabilité sans compromis.</p>
+            <p class="text-lg text-gray-400">Faites confiance à notre expertise pour propulser votre activité grâce à des infrastructures performantes et des services d'une qualité inégalée.</p>
+        </div>
+
+        <!-- Section Liste des offres -->
+        <h1 class="text-5xl font-extrabold text-center text-white mb-16">Nos Offres</h1>
+
+        <!-- Grille des offres -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-16 px-4 mb-32">
+            {% for offer in offers %}
+                <div class="bg-white rounded-xl shadow-2xl overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-2xl transform">
+                    <div class="bg-gradient-to-r from-indigo-600 to-blue-600 p-8">
+                        <h3 class="text-3xl font-bold text-white">{{ offer.name }}</h3>
+                    </div>
+                    <div class="p-8">
+                        <ul class="space-y-4 mb-6 text-lg text-gray-700">
+                            <li class="flex items-center"><svg class="w-6 h-6 mr-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Processeur : {{ offer.processor }}</li>
+                            <li class="flex items-center"><svg class="w-6 h-6 mr-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>RAM : {{ offer.ram }} Go</li>
+                            <li class="flex items-center"><svg class="w-6 h-6 mr-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Stockage : {{ offer.storage }} Go</li>
+                            <li class="flex items-center"><svg class="w-6 h-6 mr-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Bande Passante : {{ offer.bandwidth }} Mbps</li>
+                        </ul>
+
+                        <div class="flex justify-between items-center mt-8">
+                            <span class="text-2xl font-semibold text-blue-600">{{ offer.monthlyPrice|number_format(2, ',', ' ') }} €<span class="text-sm font-medium text-gray-500">/mois</span></span>
+                            <a href="{{ path('app_products') }}" class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-lg px-6 py-3 rounded-full transition duration-300 hover:scale-105 hover:bg-indigo-700">Boutique</a>
+                        </div>
+
+                        <!-- Phrase d'accroche sous chaque carte -->
+                        <div class="mt-8 text-center">
+                            <p class="text-lg text-gray-600">Une solution fiable et performante pour vos besoins.</p>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <p class="text-center text-gray-400 col-span-full">Aucune offre disponible.</p>
+            {% endfor %}
+        </div>
+
+        <!-- Espacement entre la section des offres et le CTA -->
+        <div class="mb-32"></div>
+
+        <!-- Section Appel à l'action -->
+        <div class="py-32 bg-gradient-to-r from-blue-800 via-indigo-800 to-indigo-600 text-white text-center">
+            <h2 class="text-4xl font-extrabold mb-8">Prêt à Rejoindre Viget ?</h2>
+            <p class="text-lg mb-12">Contactez-nous dès aujourd'hui pour découvrir l'offre qui correspond parfaitement à vos besoins. Bénéficiez d'un service inégalé, rapide et performant.</p>
+            <a href="{{ path('app_contact') }}" class="bg-white text-blue-600 text-lg font-semibold py-4 px-8 rounded-full hover:bg-blue-100 transition duration-300">Nous Contacter</a>
+        </div>
+
+    </div>
+
+    {% include 'components/footer.html.twig' %}
+{% endblock %}

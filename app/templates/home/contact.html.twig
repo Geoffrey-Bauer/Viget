@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contactez-nous - Viget{% endblock %}
+
+{% block body %}
+    <div class="bg-gradient-to-r from-blue-900 via-indigo-900 to-black">
+
+        <!-- Navbar -->
+        {% include 'components/navbar.html.twig' %}
+
+        <!-- Section Contact -->
+        <div class="max-w-screen-xl mx-auto py-24 px-8 text-center text-white">
+            <h2 class="text-5xl font-extrabold leading-tight mb-8">Contactez-nous</h2>
+            <p class="text-lg text-gray-300 mb-8">Vous avez une question, une préoccupation ou besoin d’assistance ? Nous sommes là pour vous aider. Pour toute demande technique ou support, veuillez passer par votre espace utilisateur pour créer un ticket.</p>
+            <p class="text-xl text-gray-400 mb-12">Nos experts sont disponibles 24/7 et prendront en charge votre demande dès que possible. Cliquez sur le lien ci-dessous pour accéder à votre espace client et créer un ticket.</p>
+
+            <!-- Lien vers le panel utilisateur -->
+            <div>
+                <a href="https://app_tickets.com/login" class="bg-indigo-700 text-white text-lg font-semibold py-4 px-8 rounded-full hover:bg-indigo-600 transition duration-300">Accédez à votre espace client</a>
+            </div>
+        </div>
+
+        <!-- Section Informations de Contact -->
+        <div class="bg-gray-800 text-white py-24">
+            <div class="max-w-screen-xl mx-auto px-8 text-center">
+                <h3 class="text-4xl font-extrabold mb-8">Autres moyens de nous contacter</h3>
+                <p class="text-xl mb-4">Vous pouvez également nous joindre via les moyens suivants :</p>
+                <div class="space-y-6">
+                    <div class="flex justify-center items-center text-lg">
+                        <span class="mr-4"><i class="fas fa-phone-alt"></i></span>
+                        <span>+33 1 23 45 67 89</span>
+                    </div>
+                    <div class="flex justify-center items-center text-lg">
+                        <span class="mr-4"><i class="fas fa-envelope"></i></span>
+                        <span>contact@viget.com</span>
+                    </div>
+                    <div class="flex justify-center items-center text-lg">
+                        <span class="mr-4"><i class="fas fa-map-marker-alt"></i></span>
+                        <span>123 Rue de l'Hébergement, Paris, France</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section d'Appel à l'Action -->
+        <div class="py-24 bg-gradient-to-r from-blue-800 via-indigo-800 to-indigo-600 text-white text-center">
+            <h2 class="text-4xl font-extrabold mb-8">Besoin d'assistance immédiate ?</h2>
+            <p class="text-lg mb-12">Cliquez ci-dessous pour créer un ticket de support et notre équipe vous contactera rapidement.</p>
+            <a href="https://app_tickets.com/login" class="bg-white text-blue-600 text-lg font-semibold py-4 px-8 rounded-full hover:bg-blue-100 transition duration-300">Accéder à l'espace client</a>
+        </div>
+
+    </div>
+
+    {% include 'components/footer.html.twig' %}
+{% endblock %}
