@@ -1,0 +1,130 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du Ticket{% endblock %}
+
+{% block body %}
+    <div class="flex h-screen bg-gray-100">
+        <!-- Sidebar -->
+        {% include 'admin/components/sidebar.html.twig' %}
+
+        <div class="flex-1 flex flex-col overflow-hidden ml-64">
+            <!-- Topbar -->
+            {% include 'admin/components/topbar.html.twig' %}
+
+            <!-- Main content -->
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 p-8 pt-20">
+                <!-- Header Section -->
+                <div class="flex justify-between items-center mb-10">
+                    <div>
+                        <h1 class="text-4xl font-extrabold text-gray-800">Détails du Ticket</h1>
+                        <p class="text-gray-500">Gérez les échanges et les actions sur ce ticket.</p>
+                    </div>
+                    <a href="{{ path('app_admin_tickets') }}"
+                       class="flex items-center bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h12M9 21l-6-6 6-6" />
+                        </svg>
+                        Retour
+                    </a>
+                </div>
+
+                <!-- Ticket Info -->
+                <div class="bg-white shadow-xl rounded-lg p-6 mb-8">
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-2xl font-bold text-gray-800">{{ ticket.subject }}</h2>
+                        <span class="px-4 py-2 rounded-lg text-sm font-semibold
+                          {% if ticket.status == 'Ouvert' %}
+                              bg-green-100 text-green-700
+                          {% elseif ticket.status == 'En cours' %}
+                              bg-yellow-100 text-yellow-700
+                          {% else %}
+                              bg-red-100 text-red-700
+                          {% endif %}">
+                        {{ ticket.status }}
+                    </span>
+                    </div>
+                    <p class="text-gray-600 mt-2"><strong>Créé le :</strong> {{ ticket.creationDate|date('d/m/Y H:i') }}</p>
+                </div>
+
+                <!-- Chat Section -->
+                <div class="bg-white shadow-xl rounded-lg p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Messages</h3>
+                    <div class="space-y-4 max-h-[500px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+                        {% for message in ticket.ticketResponses %}
+                            <div class="flex {% if message.user and message.user.roles[0] == 'ROLE_ADMIN' %}justify-end{% else %}justify-start{% endif %}">
+                                <div class="relative max-w-md p-4 rounded-lg shadow-md transition-transform duration-200
+                             {% if message.user and message.user.roles[0] == 'ROLE_ADMIN' %}
+                                 bg-indigo-100 text-indigo-900
+                             {% else %}
+                                 bg-green-100 text-green-900
+                             {% endif %}">
+                                    <p class="font-semibold text-sm mb-1">
+                                        {% if message.user and message.user.roles[0] == 'ROLE_ADMIN' %}
+                                            Admin: {{ message.user.firstname }} {{ message.user.lastname }}
+                                        {% else %}
+                                            Client: {{ ticket.user.firstname }} {{ ticket.user.lastname }}
+                                        {% endif %}
+                                    </p>
+                                    <p>{{ message.message }}</p>
+                                    <p class="text-xs text-gray-500 mt-2">{{ message.responseDate|date('d/m/Y H:i') }}</p>
+                                    <div class="absolute top-full left-1/2 -translate-x-1/2 h-3 w-3
+                                 {% if message.user and message.user.roles[0] == 'ROLE_ADMIN' %}
+                                     bg-indigo-100
+                                 {% else %}
+                                     bg-green-100
+                                 {% endif %}
+                                 rotate-45 transform"></div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Formulaire de réponse -->
+                <div class="bg-white shadow-xl rounded-lg p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Répondre au Ticket</h3>
+                    <div class="space-y-4">
+                        {{ form_start(form, { attr: { class: 'space-y-4' } }) }}
+                        <div>
+                            {{ form_row(form.message, { label: false, attr: { class: 'w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400', placeholder: 'Écrivez votre réponse...' } }) }}
+                        </div>
+                        <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-lg shadow-md transition-transform transform hover:scale-105">
+                            Envoyer la Réponse
+                        </button>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+
+                <!-- Clôturer le Ticket -->
+                {% if not ticket.closingDate %}
+                    <div class="bg-white shadow-xl rounded-lg p-6">
+                        <form action="{{ path('app_admin_ticket_close', {'id': ticket.id}) }}" method="post">
+                            <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-lg shadow-md transition-transform transform hover:scale-105">
+                                Clôturer le Ticket
+                            </button>
+                        </form>
+                    </div>
+                {% endif %}
+            </main>
+        </div>
+    </div>
+
+    <style>
+        /* Custom Scrollbar */
+        .scrollbar-thin::-webkit-scrollbar {
+            width: 6px;
+        }
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+            background-color: #d1d5db;
+            border-radius: 3px;
+        }
+        .scrollbar-thin::-webkit-scrollbar-track {
+            background-color: #f3f4f6;
+        }
+
+        /* Hover Effect on Messages */
+        div.max-w-md:hover {
+            transform: scale(1.02);
+        }
+    </style>
+{% endblock %}

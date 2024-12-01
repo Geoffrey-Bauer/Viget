@@ -16,7 +16,7 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <h3 class="text-sm font-medium text-gray-500">Utilisateurs</h3>
-                                <p class="mt-2 text-2xl font-semibold text-gray-900">8,282</p>
+                                <p class="mt-2 text-2xl font-semibold text-gray-900">{{ totalUsers }}</p>
                             </div>
                             <div class="bg-blue-100 p-3 rounded-full">
                                 <i class="fas fa-users text-blue-600"></i>
@@ -27,7 +27,7 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <h3 class="text-sm font-medium text-gray-500">Commandes</h3>
-                                <p class="mt-2 text-2xl font-semibold text-gray-900">215</p>
+                                <p class="mt-2 text-2xl font-semibold text-gray-900">{{ totalOrders }}</p>
                             </div>
                             <div class="bg-green-100 p-3 rounded-full">
                                 <i class="fas fa-shopping-cart text-green-600"></i>
@@ -38,7 +38,7 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <h3 class="text-sm font-medium text-gray-500">Tickets</h3>
-                                <p class="mt-2 text-2xl font-semibold text-gray-900">42</p>
+                                <p class="mt-2 text-2xl font-semibold text-gray-900">{{ totalTickets }}</p>
                             </div>
                             <div class="bg-yellow-100 p-3 rounded-full">
                                 <i class="fas fa-ticket-alt text-yellow-600"></i>
@@ -49,7 +49,7 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <h3 class="text-sm font-medium text-gray-500">Revenus</h3>
-                                <p class="mt-2 text-2xl font-semibold text-gray-900">12,456€</p>
+                                <p class="mt-2 text-2xl font-semibold text-gray-900">{{ totalRevenue }}</p>
                             </div>
                             <div class="bg-purple-100 p-3 rounded-full">
                                 <i class="fas fa-chart-line text-purple-600"></i>
@@ -58,34 +58,19 @@
                     </div>
                 </div>
 
+                <!-- Remplacement de la section "Derniers événements" par "Statistiques récentes" -->
                 <div class="mt-8 bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-lg font-semibold mb-4">Derniers événements</h3>
-                    <table class="w-full">
-                        <thead>
-                        <tr class="text-left border-b">
-                            <th class="pb-2">Événement</th>
-                            <th class="pb-2">Date</th>
-                            <th class="pb-2">Statut</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr class="border-b">
-                            <td class="py-2">Serveur 1 redémarré</td>
-                            <td class="py-2">1 min ago</td>
-                            <td class="py-2">
-                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">Terminé</span>
-                            </td>
-                        </tr>
-                        <tr class="border-b">
-                            <td class="py-2">Nouvelle mise à jour</td>
-                            <td class="py-2">5 min ago</td>
-                            <td class="py-2">
-                                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs">En cours</span>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <h3 class="text-lg font-semibold mb-4">Statistiques Récentes</h3>
+
+                    <!-- Exemple de statistiques récentes -->
+                    <ul class="list-disc pl-5">
+                        <li>Nouvelle commande créée: 5</li>
+                        <li>Nouveau ticket ouvert: 2</li>
+                        <li>Utilisateur inscrit: 10</li>
+                    </ul>
+
                 </div>
+
             </main>
         </div>
     </div>

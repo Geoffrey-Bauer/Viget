@@ -16,28 +16,13 @@ class OrderRepository extends ServiceEntityRepository
         parent::__construct($registry, Order::class);
     }
 
-    //    /**
-    //     * @return Order[] Returns an array of Order objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('o')
-    //            ->andWhere('o.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('o.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function getTotalRevenue(): float
+    {
+        $qb = $this->createQueryBuilder('o')
+            ->select('SUM(o.totalAmount)') // Assurez-vous que 'totalAmount' est le bon champ dans votre entité Order
+            ->where('o.status IN (:statuses)') // Filtre par les statuts spécifiés
+            ->setParameter('statuses', ['Payé', 'Livré']); // Remplacez par les valeurs exactes de vos statuts
 
-    //    public function findOneBySomeField($value): ?Order
-    //    {
-    //        return $this->createQueryBuilder('o')
-    //            ->andWhere('o.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        return (float) $qb->getQuery()->getSingleScalarResult();
+    }
 }

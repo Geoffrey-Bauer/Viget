@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Viget | Gestion des Tickets{% endblock %}
+
+{% block body %}
+    <div class="flex h-screen bg-gray-100">
+        <!-- Sidebar -->
+        {% include 'admin/components/sidebar.html.twig' %}
+
+        <div class="flex-1 flex flex-col overflow-hidden ml-64">
+            <!-- Topbar -->
+            {% include 'admin/components/topbar.html.twig' %}
+
+            <!-- Main content -->
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 p-8 pt-20">
+                <div class="mb-10">
+                    <h1 class="text-4xl font-extrabold text-gray-800">Gestion des Tickets</h1>
+                    <p class="text-gray-500">Surveillez et gérez tous les tickets des clients efficacement.</p>
+                </div>
+
+                <div class="space-y-8">
+                    <!-- Loop through the ticket statuses -->
+                    {% for status, tickets in {'En Attente': pendingTickets, 'Répondus': answeredTickets, 'Clôturés': closedTickets} %}
+                        <section>
+                            <div class="bg-white shadow-lg rounded-lg p-6">
+                                <header class="flex justify-between items-center mb-4">
+                                    <h2 class="text-2xl font-semibold text-gray-800">{{ status }}</h2>
+                                    <span class="text-sm text-gray-500">Total : {{ tickets|length }}</span>
+                                </header>
+
+                                <div class="overflow-x-auto">
+                                    <table class="min-w-full bg-gray-50 border rounded-lg overflow-hidden">
+                                        <thead>
+                                        <tr class="bg-gray-200">
+                                            <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Numéro Ticket</th>
+                                            <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Sujet</th>
+                                            <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Utilisateur</th>
+                                            <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Statut</th>
+                                            <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Date Création</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="bg-white divide-y divide-gray-200">
+                                        {% for ticket in tickets %}
+                                            <tr class="hover:bg-gray-100 cursor-pointer transition duration-200 ease-in-out"
+                                                onclick="window.location='{{ path('app_admin_ticket_details', {'id': ticket.id}) }}'">
+                                                <td class="px-6 py-4">{{ ticket.id }}</td>
+                                                <td class="px-6 py-4">{{ ticket.subject }}</td>
+                                                <td class="px-6 py-4">{{ ticket.user.lastname }} {{ ticket.user.firstname }}</td>
+                                                <td class="px-6 py-4">
+                                                    {% if ticket.status == 'En Attente' %}
+                                                        <span class="text-yellow-500 font-semibold">{{ ticket.status }}</span>
+                                                    {% elseif ticket.status == 'Répondus' %}
+                                                        <span class="text-green-500 font-semibold">{{ ticket.status }}</span>
+                                                    {% else %}
+                                                        <span class="text-gray-500 font-semibold">{{ ticket.status }}</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="px-6 py-4 text-sm text-gray-500">{{ ticket.creationDate|date('d/m/Y H:i') }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                    {% endfor %}
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Styles optionnels pour transitions et focus -->
+    <style>
+        tr:hover {
+            background-color: #f9fafb;
+            cursor: pointer;
+        }
+    </style>
+
+{% endblock %}

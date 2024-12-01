@@ -1,0 +1,151 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des Commandes{% endblock %}
+
+{% block body %}
+    <div class="flex h-screen bg-gray-100">
+        <!-- Sidebar -->
+        {% include 'admin/components/sidebar.html.twig' %}
+
+        <div class="flex-1 flex flex-col overflow-hidden ml-64">
+            <!-- Topbar -->
+            {% include 'admin/components/topbar.html.twig' %}
+
+            <!-- Main content -->
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 p-6 pt-20">
+                <div class="mb-10">
+                    <h1 class="text-4xl font-extrabold text-gray-800">Gestion des Commandes</h1>
+                    <p class="text-gray-500">Consultez, gérez et organisez les commandes de vos clients.</p>
+                </div>
+
+                <div class="space-y-8">
+                    <!-- Section : Commandes En Attente de Paiement -->
+                    <section>
+                        <div class="bg-white shadow-lg rounded-lg p-6">
+                            <header class="flex justify-between items-center mb-4">
+                                <h2 class="text-2xl font-semibold text-gray-800">Commandes En Attente de Paiement</h2>
+                            </header>
+                            <table class="min-w-full bg-gray-50 border rounded-lg overflow-hidden">
+                                <thead>
+                                <tr class="bg-gray-200">
+                                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Numéro de Commande</th>
+                                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Montant</th>
+                                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Statut</th>
+                                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                {% for order in pendingOrders %}
+                                    <tr class="hover:bg-gray-100 transition duration-200">
+                                        <td class="px-6 py-4">{{ order.id }}</td>
+                                        <td class="px-6 py-4">{{ order.totalAmount|number_format(2, ',', ' ') }} €</td>
+                                        <td class="px-6 py-4">
+                                            <span class="text-yellow-600 font-semibold">En Attente</span>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex space-x-4">
+                                                <form action="{{ path('app_admin_order_delete', {'id': order.id}) }}" method="post">
+                                                    <button type="submit"
+                                                            class="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded shadow transition">
+                                                        Supprimer
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Section : Commandes Payées -->
+                    <section>
+                        <div class="bg-white shadow-lg rounded-lg p-6">
+                            <header class="flex justify-between items-center mb-4">
+                                <h2 class="text-2xl font-semibold text-gray-800">Commandes Payées</h2>
+                            </header>
+                            <table class="min-w-full bg-gray-50 border rounded-lg overflow-hidden">
+                                <thead>
+                                <tr class="bg-gray-200">
+                                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Numéro de Commande</th>
+                                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Montant</th>
+                                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Statut</th>
+                                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                {% for order in paidOrders %}
+                                    <tr class="hover:bg-gray-100 transition duration-200">
+                                        <td class="px-6 py-4">{{ order.id }}</td>
+                                        <td class="px-6 py-4">{{ order.totalAmount|number_format(2, ',', ' ') }} €</td>
+                                        <td class="px-6 py-4">
+                                            <span class="text-green-600 font-semibold">Payée</span>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex space-x-4">
+                                                <form action="{{ path('app_admin_order_deliver', {'id': order.id}) }}" method="post">
+                                                    <button type="submit"
+                                                            class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded shadow transition">
+                                                        Livrer
+                                                    </button>
+                                                </form>
+                                                <form action="{{ path('app_admin_order_delete', {'id': order.id}) }}" method="post">
+                                                    <button type="submit"
+                                                            class="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded shadow transition">
+                                                        Supprimer
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Section : Commandes Livrées -->
+                    <section>
+                        <div class="bg-white shadow-lg rounded-lg p-6">
+                            <header class="flex justify-between items-center mb-4">
+                                <h2 class="text-2xl font-semibold text-gray-800">Commandes Livrées</h2>
+                            </header>
+                            <table class="min-w-full bg-gray-50 border rounded-lg overflow-hidden">
+                                <thead>
+                                <tr class="bg-gray-200">
+                                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Numéro de Commande</th>
+                                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Montant</th>
+                                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Statut</th>
+                                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                {% for order in deliveredOrders %}
+                                    <tr class="hover:bg-gray-100 transition duration-200">
+                                        <td class="px-6 py-4">{{ order.id }}</td>
+                                        <td class="px-6 py-4">{{ order.totalAmount|number_format(2, ',', ' ') }} €</td>
+                                        <td class="px-6 py-4">
+                                            <span class="text-blue-600 font-semibold">Livrée</span>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex space-x-4">
+                                                <form action="{{ path('app_admin_order_delete', {'id': order.id}) }}" method="post">
+                                                    <button type="submit"
+                                                            class="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded shadow transition">
+                                                        Supprimer
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+            </main>
+        </div>
+    </div>
+{% endblock %}

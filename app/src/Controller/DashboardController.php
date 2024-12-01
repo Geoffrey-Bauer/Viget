@@ -347,7 +347,7 @@ class DashboardController extends AbstractController
         $user = $this->getUser();
 
         // Charger le ticket avec la commande associée
-        $ticket = $entityManager->getRepository(Ticket::class)->findTicketWithPurchase($id); // Utilisez le bon nom ici
+        $ticket = $entityManager->getRepository(Ticket::class)->findTicketWithPurchase($id);
 
         if (!$ticket || $ticket->getUser() !== $user) {
             throw $this->createAccessDeniedException('Vous n\'êtes pas autorisé à voir ce ticket.');
@@ -370,18 +370,14 @@ class DashboardController extends AbstractController
             $response->setTicket($ticket);
             $response->setResponseDate(new \DateTime());
 
-            // Mettre à jour le statut du ticket si nécessaire
+            // Mettre à jour le statut du ticket à "En attente"
             if ($ticket->getStatus() !== 'Clôturé') {
-                // Vous pouvez définir un nouveau statut si nécessaire
-                // Par exemple :
-                //  - Si vous voulez le mettre à "En attente" après une réponse.
-                //  - Ou vous pouvez laisser le statut tel quel.
-                //$ticket->setStatus('En attente');
+                $ticket->setStatus('En attente');
             }
 
             // Persister les changements
             $entityManager->persist($response);
-            //$entityManager->persist($ticket); // Si vous modifiez le ticket, décommentez cette ligne.
+            $entityManager->persist($ticket); // Assurez-vous de persister le ticket après avoir modifié son statut
             $entityManager->flush();
 
             return $this->redirectToRoute('app_ticket_detail', ['id' => $ticket->getId()]);

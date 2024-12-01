@@ -14,7 +14,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="flex items-center space-x-3 p-3 rounded-lg
+                    <a href="{{ path('app_admin_orders') }}" class="flex items-center space-x-3 p-3 rounded-lg
                         {% if app.request.get('_route') starts with 'app_admin_commandes' %}bg-blue-600{% else %}hover:bg-gray-800{% endif %}
                         transition duration-200">
                         <i class="fas fa-shopping-cart w-6 text-center"></i>
@@ -22,7 +22,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="flex items-center space-x-3 p-3 rounded-lg
+                    <a href="{{ path('app_admin_tickets') }}" class="flex items-center space-x-3 p-3 rounded-lg
                         {% if app.request.get('_route') starts with 'app_admin_tickets' %}bg-blue-600{% else %}hover:bg-gray-800{% endif %}
                         transition duration-200">
                         <i class="fas fa-ticket-alt w-6 text-center"></i>
