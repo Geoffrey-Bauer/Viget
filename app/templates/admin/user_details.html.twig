@@ -1,0 +1,111 @@
+{# templates/admin/user_details.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de l'Utilisateur{% endblock %}
+
+{% block body %}
+    <div class="flex h-screen bg-gray-100">
+        <!-- Sidebar -->
+        {% include 'admin/components/sidebar.html.twig' %}
+
+        <div class="flex-1 flex flex-col overflow-hidden ml-64">
+            <!-- Topbar -->
+            {% include 'admin/components/topbar.html.twig' %}
+
+            <!-- Main content -->
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 p-6 pt-20">
+                <h2 class="text-4xl font-bold text-gray-900 mb-6">Détails de l'Utilisateur</h2>
+
+                <div class="bg-white shadow-lg rounded-lg p-6">
+                    <h3 class="text-2xl font-semibold mb-4">Informations Utilisateur</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gray-50 p-4 rounded-lg shadow-md">
+                            <p><strong>Nom :</strong> {{ user.firstname }} {{ user.lastname }}</p>
+                            <p><strong>Email :</strong> {{ user.email }}</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg shadow-md">
+                            <p><strong>Adresse :</strong> {{ user.address }}</p>
+                            <p><strong>Code Postal :</strong> {{ user.zipcode }}</p>
+                            <p><strong>Ville :</strong> {{ user.city }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Affichage du statut de bannissement -->
+                    <div class="mt-6">
+                        <h3 class="text-xl font-semibold">Statut de Bannissement</h3>
+                        {% if user.isBanned %}
+                            <p class="text-red-600"><strong>Status:</strong> Banni</p>
+                            <p><strong>Date de Bannissement:</strong> {{ user.banDate|date('d/m/Y H:i:s') }}</p>
+                        {% else %}
+                            <p class="text-green-600"><strong>Status:</strong> Actif</p>
+                        {% endif %}
+                    </div>
+
+                    <h3 class="text-2xl font-semibold mt-6 mb-2">Tickets Associés ({{ tickets|length }})</h3>
+                    {% if tickets is empty %}
+                        <p>Aucun ticket associé.</p>
+                    {% else %}
+                        <ul class="list-disc pl-5 space-y-1">
+                            {% for ticket in tickets %}
+                                <li class="bg-blue-100 p-2 rounded-md">{{ ticket.title }} - Statut: {{ ticket.status }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    <h3 class="text-2xl font-semibold mt-6 mb-2">Commandes Associées ({{ orders|length }})</h3>
+                    {% if orders is empty %}
+                        <p>Aucune commande associée.</p>
+                    {% else %}
+                        <ul class="list-disc pl-5 space-y-1">
+                            {% for order in orders %}
+                                <li class="bg-green-100 p-2 rounded-md">Commande ID: {{ order.id }} - Statut: {{ order.status }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    <a href="{{ path('app_admin_users') }}" class="mt-4 inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">Retour à la liste des utilisateurs</a>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <style>
+        /* Styles personnalisés pour la page de détails utilisateur */
+        .bg-gray-200 {
+            background-color: #edf2f7; /* Couleur de fond gris clair */
+        }
+
+        .bg-white {
+            background-color: white; /* Couleur de fond blanche */
+        }
+
+        .shadow-lg {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); /* Ombre douce */
+        }
+
+        .rounded-lg {
+            border-radius: 0.5rem; /* Coins arrondis */
+        }
+
+        .text-gray-900 {
+            color: #1a202c; /* Couleur du texte gris foncé */
+        }
+
+        .text-xl {
+            font-size: 1.25rem; /* Taille de police large */
+        }
+
+        .font-bold {
+            font-weight: bold; /* Texte en gras */
+        }
+
+        .list-disc {
+            list-style-type: disc; /* Style de liste avec des disques */
+        }
+
+        .pl-5 {
+            padding-left: 1.25rem; /* Espacement à gauche */
+        }
+    </style>
+
+{% endblock %}

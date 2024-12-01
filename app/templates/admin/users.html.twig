@@ -1,0 +1,132 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="flex h-screen bg-gray-100">
+        <!-- Sidebar -->
+        {% include 'admin/components/sidebar.html.twig' %}
+
+        <div class="flex-1 flex flex-col overflow-hidden ml-64"> <!-- Ajout de ml-64 pour décaler le contenu -->
+            <!-- Topbar -->
+            {% include 'admin/components/topbar.html.twig' %}
+
+            <!-- Main content -->
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 p-6 pt-20"> <!-- Ajout de pt-20 pour l'espace sous la topbar -->
+                <h2 class="text-3xl font-semibold text-gray-900 mb-6">Gestion des Utilisateurs</h2>
+
+                <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Utilisateur</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rôle</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                            {% for user in users %}
+                                <tr onclick="window.location='{{ path('app_admin_user_details', {'id': user.id}) }}'" class="cursor-pointer hover:bg-gray-100 transition duration-300 ease-in-out">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-10 w-10">
+                                                <div class="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center">
+                                                    <span class="text-xl font-medium text-gray-700">{{ user.firstname|first }}{{ user.lastname|first }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">
+                                                    {{ user.firstname }} {{ user.lastname }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-500">{{ user.email }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {% if 'ROLE_ADMIN' in user.roles %}bg-purple-100 text-purple-800{% else %}bg-green-100 text-green-800{% endif %}">
+                                            {% if 'ROLE_ADMIN' in user.roles %}Admin{% else %}User{% endif %}
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {% if user.isBanned %}bg-red-100 text-red-800{% else %}bg-green-100 text-green-800{% endif %}">
+                                            {% if user.isBanned %}Banni{% else %}Actif{% endif %}
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <div class="flex space-x-2 items-center">
+                                            <form action="{{ path('app_admin_user_change_role', {'id': user.id}) }}" method="post">
+                                                <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-[0.5rem] px-[0.75rem] rounded transition duration-[0.3s] ease-in-out">
+                                                    {% if 'ROLE_ADMIN' in user.roles %}Passer User{% else %}Passer Admin{% endif %}
+                                                </button>
+                                            </form>
+
+                                            <form action="{{ path('app_admin_user_toggle_ban', {'id': user.id}) }}" method="post" title="{% if user.banDate %}{{ user.banDate|date('d/m/Y H:i:s') }}{% else %}Aucun bannissement{% endif %}">
+                                                <button type="submit"
+                                                        class="{% if user.isBanned %}
+                                                        bg-green-600 hover:bg-green-700
+                                                    {% else %}
+                                                        bg-red-600 hover:bg-red-700 border-2 border-white shadow-lg
+                                                    {% endif %}
+                                                        text-white font-bold py-[0.5rem] px-[0.75rem] rounded transition duration-[0.3s] ease-in-out">
+                                                    {% if user.isBanned %}Débannir{% else %}Bannir{% endif %}
+                                                </button>
+
+                                            </form>
+
+                                            <!-- Point d'interrogation à côté du bouton Bannir/Débannir -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                 title="{% if user.banDate %}{{ user.banDate|date('d/m/Y H:i:s') }}{% else %}Aucun bannissement{% endif %}"
+                                                 class="w-[20px] h-[20px] cursor-pointer hover:text-red transition duration-[0.3s] ease-in-out ml-[5px]"
+                                                 onmouseover="this.style.color='red'"
+                                                 onmouseout="this.style.color='currentColor'">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="{% if user.isBanned %}M12 8v4m0 4h.01M12 4a8 8 0 100 16 8 8 0 000 -16z{% else %}M12 8v4m0 4h.01M12 4a8 8 0 100 16 8 8 0 000 -16z{% endif %}" />
+                                            </svg>
+
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Tooltip pour la date de bannissement -->
+    <script>
+        document.querySelectorAll('[title]').forEach(function (element) {
+            element.addEventListener('mouseover', function () {
+                const tooltip = document.createElement('span');
+                tooltip.innerText = this.getAttribute('title');
+                tooltip.className = 'tooltip';
+                document.body.appendChild(tooltip);
+
+                const rect = this.getBoundingClientRect();
+                tooltip.style.position = 'absolute';
+                tooltip.style.left = rect.left + window.scrollX + 'px';
+                tooltip.style.top = rect.bottom + window.scrollY + 'px';
+
+                this.addEventListener('mouseout', function () {
+                    tooltip.remove();
+                });
+            });
+        });
+    </script>
+
+    <style>
+        .tooltip {
+            background-color: rgba(0, 0, 0, 0.75);
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+            z-index: 1000;
+            white-space: nowrap;
+        }
+    </style>
+
+{% endblock %}

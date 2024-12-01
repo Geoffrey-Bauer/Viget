@@ -25,7 +25,7 @@
                         <ul id="account-dropdown-menu" class="dropdown-menu absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg hidden z-10">
                             <li><a href="{{ path('app_dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Panel</a></li>
                             {% if is_granted('ROLE_ADMIN') %}
-                                <li><a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Panel Admin</a></li>
+                                <li><a href="{{ path('app_admin_dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Panel Admin</a></li>
                             {% endif %}
                             <li>
                                 <form method="post" action="{{ path('app_logout') }}" style="display: inline;">
@@ -83,7 +83,7 @@
                                class = "block px -4 py -2 text -sm text-gray -700 hover:bg-gray -100">Panel</a>
 
                             {% if is_granted('ROLE_ADMIN') %}
-                                <a href="#"
+                                <a href="{{ path('app_admin_dashboard') }}"
                                    class = "block px -4 py -2 text -sm text-gray -700 hover:bg-gray -100">Panel Admin</a>
                             {% endif %}
 

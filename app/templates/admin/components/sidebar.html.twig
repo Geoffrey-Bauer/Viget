@@ -1,0 +1,49 @@
+<div class="bg-gray-900 text-white w-64 h-screen fixed top-0 left-0 z-30 shadow-lg overflow-y-auto">
+    <div class="p-6">
+        <div class="flex items-center justify-center mb-8">
+            <span class="text-2xl font-bold">Viget Admin</span>
+        </div>
+        <nav>
+            <ul class="space-y-2">
+                <li>
+                    <a href="{{ path('app_admin_dashboard') }}" class="flex items-center space-x-3 p-3 rounded-lg
+                        {% if app.request.get('_route') == 'app_admin_dashboard' %}bg-blue-600{% else %}hover:bg-gray-800{% endif %}
+                        transition duration-200">
+                        <i class="fas fa-tachometer-alt w-6 text-center"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center space-x-3 p-3 rounded-lg
+                        {% if app.request.get('_route') starts with 'app_admin_commandes' %}bg-blue-600{% else %}hover:bg-gray-800{% endif %}
+                        transition duration-200">
+                        <i class="fas fa-shopping-cart w-6 text-center"></i>
+                        <span>Commandes</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center space-x-3 p-3 rounded-lg
+                        {% if app.request.get('_route') starts with 'app_admin_tickets' %}bg-blue-600{% else %}hover:bg-gray-800{% endif %}
+                        transition duration-200">
+                        <i class="fas fa-ticket-alt w-6 text-center"></i>
+                        <span>Tickets</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('app_admin_users') }}" class="flex items-center space-x-3 p-3 rounded-lg
+                        {% if app.request.get('_route') starts with 'app_admin_users' %}bg-blue-600{% else %}hover:bg-gray-800{% endif %}
+                        transition duration-200">
+                        <i class="fas fa-users w-6 text-center"></i>
+                        <span>Utilisateurs</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="absolute bottom-0 w-full p-4">
+        <a href="{{ path('app_logout') }}" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-800 transition duration-200">
+            <i class="fas fa-sign-out-alt w-6 text-center"></i>
+            <span>Déconnexion</span>
+        </a>
+    </div>
+</div>

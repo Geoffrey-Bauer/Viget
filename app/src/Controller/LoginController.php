@@ -82,4 +82,11 @@ class LoginController extends AbstractController
             'registrationForm' => $form->createView(),
         ]);
     }
+
+    // -------------- BAN -------------------
+    #[Route('/banned', name: 'app_banned')]
+    public function banned(): Response
+    {
+        return $this->render('login/banned.html.twig');
+    }
 }

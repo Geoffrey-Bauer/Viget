@@ -28,6 +28,12 @@ class DashboardController extends AbstractController
     {
         $user = $this->getUser();
 
+        // Vérifiez si l'utilisateur est connecté et s'il n'est pas banni
+        if (!$user || $user->isBanned()) {
+            // Redirigez vers la page d'accueil si l'utilisateur n'est pas connecté ou est banni
+            return $this->redirectToRoute('app_home');
+        }
+
         // Récupération des commandes de l'utilisateur
         $orders = $orderRepository->findBy(['user' => $user]);
 
